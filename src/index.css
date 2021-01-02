@@ -12,7 +12,13 @@ code {
     monospace;
 }
 
-@media (min-width: 769px){
+@media (max-width: 568px){
+  #root {
+    padding: 5%;
+  }
+}
+
+@media (min-width: 569px){
   #root {
     position: fixed;
       top: 50%;
