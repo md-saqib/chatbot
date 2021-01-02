@@ -15,7 +15,7 @@ code {
 @media (max-width: 568px){
   #root {
     padding: 5%;
-  }
+  } 
 }
 
 @media (min-width: 569px){
