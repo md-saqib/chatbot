@@ -8,10 +8,10 @@ import { ThemeProvider } from 'styled-components';
 const theme = {
   background: '#f5f8fb',
   fontFamily: 'Helvetica Neue,Helvetica,Arial,sans-serif',
-  headerBgColor: '#333',
+  headerBgColor: '#202121',
   headerFontColor: '#fff',
-  headerFontSize: '15px',
-  botBubbleColor: '#333',
+  headerFontSize: '14px',
+  botBubbleColor: '#202121',
   botFontColor: '#fff',
   userBubbleColor: '#fff',
   userFontColor: '#4a4a4a',
@@ -73,7 +73,7 @@ class SimpleForm extends Component {
   render() {
     return (
       <ChatBot
-      headerTitle="Welcome To VTU"
+      headerTitle="Welcome To VTU ChatBot"
       botAvatar= {BotAvt}
         steps={[
           {
