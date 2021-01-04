@@ -75,6 +75,7 @@ class SimpleForm extends Component {
       <ChatBot
       headerTitle="Welcome To VTU ChatBot"
       botAvatar= {BotAvt}
+      recognitionEnable={true}
         steps={[
           {
             id: '1',
