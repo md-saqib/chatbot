@@ -68,7 +68,7 @@ Review.propTypes = {
 Review.defaultProps = {
   steps: undefined,
 };
-
+    
 class SimpleForm extends Component {
   render() {
     return (
