@@ -1,13 +1,14 @@
 <?php
 header("Content-Type:application/json");
-require "./functions.php";
+require "./services.php";
 
 
 if(!empty($_GET['college']))
 {
 	$college=$_GET['college'];
 
-	$collegeDetails = get_college_details($college);
+    $services = new Services;
+	$collegeDetails = $services->getCollegeDetails($college);
 
 	if(empty($collegeDetails))
 	{
