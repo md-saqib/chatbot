@@ -15,7 +15,7 @@ if(!empty($_GET['college']))
 	}
 	else
 	{
-		response(200,"Product Found",$collegeDetails);
+		response(200,"College Found",$collegeDetails);
 	}
 
 }
