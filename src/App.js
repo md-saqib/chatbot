@@ -1,192 +1,123 @@
-import ChatBot from 'react-simple-chatbot';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import BotAvt from './assets/vtulogo.png';
-import { ThemeProvider } from 'styled-components';
+import ChatBot, { Loading } from 'react-simple-chatbot';
 
-// all available props
-const theme = {
-  background: '#f5f8fb',
-  fontFamily: 'Helvetica Neue,Helvetica,Arial,sans-serif',
-  headerBgColor: '#202121',
-  headerFontColor: '#fff',
-  headerFontSize: '14px',
-  botBubbleColor: '#202121',
-  botFontColor: '#fff',
-  userBubbleColor: '#fff',
-  userFontColor: '#4a4a4a',
-};
 
-class Review extends Component {
-  constructor(props) {
-    super(props);
 
-    this.state = {
-      name: '',
-      gender: '',
-      age: '',
-    };
-  }
+class DBPedia extends Component {
+    constructor(props) {
+        super(props);
 
-  componentWillMount() {
-    const { steps } = this.props;
-    const { name, gender, age } = steps;
+        this.state = {
+            loading: true,
+            result: '',
+            trigger: false,
+        };
 
-    this.setState({ name, gender, age });
-  }
+        this.triggetNext = this.triggetNext.bind(this); 
+    }
 
-  render() {
-    const { name, gender, age } = this.state;
-    return (
-      <div style={{ width: '100%' }}>
-        <h3>Summary</h3>
-        <table>
-          <tbody>
-            <tr>
-              <td>Name</td>
-              <td>{name.value}</td>
-            </tr>
-            <tr>
-              <td>Gender</td>
-              <td>{gender.value}</td>
-            </tr>
-            <tr>
-              <td>Age</td>
-              <td>{age.value}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    );
-  }
+    componentWillMount() {
+        const self = this;
+        const { steps } = this.props;
+        const search = steps.search.value;
+    //     const endpoint = encodeURI('https://dbpedia.org');
+    //     const query = encodeURI(`
+    //   select * where {
+    //   ?x rdfs:label "${search}"@en .
+    //   ?x rdfs:comment ?comment .
+    //   FILTER (lang(?comment) = 'en')
+    //   } LIMIT 100
+    // `);
+
+        const queryUrl = 'http://localhost/chatbot/services/searchcollege.php?college=${search}'
+
+        const xhr = new XMLHttpRequest();
+
+        xhr.addEventListener('readystatechange', readyStateChange);
+
+        function readyStateChange() {
+            if (this.readyState === 4) {
+                const data = JSON.parse(this.responseText);
+                const bindings = data.results.bindings;
+                if (bindings && bindings.length > 0) {
+                    self.setState({ loading: false, result: bindings[0].comment.value });
+                } else {
+                    self.setState({ loading: false, result: 'Not found.' });
+                }
+            }
+        }
+
+        xhr.open('GET', queryUrl);
+        xhr.send();
+    }
+
+    triggetNext() {
+        this.setState({ trigger: true }, () => {
+            this.props.triggerNextStep();
+        });
+    }
+
+    render() {
+        const { trigger, loading, result } = this.state;
+
+        return (
+            <div className="dbpedia">
+                { loading ? <Loading /> : result }
+                {
+                    !loading &&
+                    <div
+                        style={{
+                            textAlign: 'center',
+                            marginTop: 20,
+                        }}
+                    >
+                        {
+                            !trigger &&
+                            <button
+                                onClick={() => this.triggetNext()}
+                            >
+                                Search Again
+                            </button>
+                        }
+                    </div>
+                }
+            </div>
+        );
+    }
 }
 
-Review.propTypes = {
-  steps: PropTypes.object,
+DBPedia.propTypes = {
+    steps: PropTypes.object,
+    triggerNextStep: PropTypes.func,
 };
 
-Review.defaultProps = {
-  steps: undefined,
+DBPedia.defaultProps = {
+    steps: undefined,
+    triggerNextStep: undefined,
 };
-    
-class SimpleForm extends Component {
-  render() {
-    return (
-      <ChatBot
-      headerTitle="Welcome To VTU ChatBot"
-      botAvatar= {BotAvt}
-      recognitionEnable={true}
+
+const ExampleDBPedia = () => (
+    <ChatBot
         steps={[
-          {
-            id: '1',
-            message: 'What is your name?',
-            trigger: 'name',
-          },
-          {
-            id: 'name',
-            user: true,
-            trigger: '3',
-          },
-          {
-            id: '3',
-            message: 'Hi {previousValue}! What is your gender?',
-            trigger: 'gender',
-          },
-          {
-            id: 'gender',
-            options: [
-              { value: 'male', label: 'Male', trigger: '5' },
-              { value: 'female', label: 'Female', trigger: '5' },
-            ],
-          },
-          {
-            id: '5',
-            message: 'How old are you?',
-            trigger: 'age',
-          },
-          {
-            id: 'age',
-            user: true,
-            trigger: '7',
-            validator: (value) => {
-              if (isNaN(value)) {
-                return 'value must be a number';
-              } else if (value < 0) {
-                return 'value must be positive';
-              } else if (value > 120) {
-                return `${value}? Come on!`;
-              }
-
-              return true;
+            {
+                id: '1',
+                message: 'Type something to search on Wikipédia. (Ex.: Brazil)',
+                trigger: 'search',
             },
-          },
-          {
-            id: '7',
-            message: 'Great! Check out your summary',
-            trigger: 'review',
-          },
-          {
-            id: 'review',
-            component: <Review />,
-            asMessage: true,
-            trigger: 'update',
-          },
-          {
-            id: 'update',
-            message: 'Would you like to update some field?',
-            trigger: 'update-question',
-          },
-          {
-            id: 'update-question',
-            options: [
-              { value: 'yes', label: 'Yes', trigger: 'update-yes' },
-              { value: 'no', label: 'No', trigger: 'end-message' },
-            ],
-          },
-          {
-            id: 'update-yes',
-            message: 'What field would you like to update?',
-            trigger: 'update-fields',
-          },
-          {
-            id: 'update-fields',
-            options: [
-              { value: 'name', label: 'Name', trigger: 'update-name' },
-              { value: 'gender', label: 'Gender', trigger: 'update-gender' },
-              { value: 'age', label: 'Age', trigger: 'update-age' },
-            ],
-          },
-          {
-            id: 'update-name',
-            update: 'name',
-            trigger: '7',
-          },
-          {
-            id: 'update-gender',
-            update: 'gender',
-            trigger: '7',
-          },
-          {
-            id: 'update-age',
-            update: 'age',
-            trigger: '7',
-          },
-          {
-            id: 'end-message',
-            message: 'Thanks! Your data was submitted successfully!',
-            end: true,
-          },
+            {
+                id: 'search',
+                user: true,
+                trigger: '3',
+            },
+            {
+                id: '3',
+                component: <DBPedia />,
+                waitAction: true,
+                trigger: '1',
+            },
         ]}
-      />
-    );
-  }
-}
-
-
-const ThemedExample = () => (
-  <ThemeProvider theme={theme}>
-    <SimpleForm/>
-  </ThemeProvider>
+    />
 );
 
-export default ThemedExample;
+export default ExampleDBPedia;
