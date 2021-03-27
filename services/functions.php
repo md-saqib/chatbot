@@ -2,7 +2,7 @@
     function db_connect(){
     $connection = mysql_connect("localhost", "root", ""); // Establishing Connection with Server
     $db = mysql_select_db("chatbot", $connection); // Selecting Database
-    return connection;
+    return $connection;
     }
 
     function db_close($connection) {

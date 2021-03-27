@@ -14,7 +14,7 @@ class DBPedia extends Component {
             trigger: false,
         };
 
-        this.triggetNext = this.triggetNext.bind(this); 
+        this.triggetNext = this.triggetNext.bind(this);
     }
 
     componentWillMount() {
