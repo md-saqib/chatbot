@@ -2,7 +2,6 @@
 header("Content-Type:application/json");
 require "./services.php";
 
-
 if(!empty($_GET['college']))
 {
 	$college=$_GET['college'];
@@ -27,6 +26,8 @@ else
 
 function response($status,$status_message,$data)
 {
+    header("Content-Type:application/json");
+    header('Access-Control-Allow-Origin: *');
 	header("HTTP/1.1 ".$status);
 
 	$response['status']=$status;

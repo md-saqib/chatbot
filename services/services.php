@@ -6,7 +6,7 @@
         private $host = "localhost";
         private $db_name = "chatbot";
         private $username = "root";
-        private $password = "";
+        private $password = "root";
 
         public $conn;
 
@@ -30,7 +30,7 @@
             try {
                 $details = $conn->prepare("SELECT * FROM college_details WHERE collegeName LIKE ?");
                 $details->execute(["%$college%"]);
-                $result = $details->fetch();
+                $result = $details->fetchAll(PDO::FETCH_ASSOC);
                 return $result;
             }
             catch(PDOException $e) {
