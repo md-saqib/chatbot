@@ -6,7 +6,7 @@
         private $host = "localhost";
         private $db_name = "chatbot";
         private $username = "root";
-        private $password = "root";
+        private $password = "";
 
         public $conn;
 

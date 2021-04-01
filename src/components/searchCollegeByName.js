@@ -8,7 +8,7 @@ function SearchCollegeByName(props) {
     const [results, setResults] = useState({});
     const [trigger, setTrigger] = useState(false);
     const [collegeName, setCollegeName] = useState(props.steps.search.value);
-    const getCollegeByNameUrl = 'http://localhost:8888/chatbot/services/searchcollege.php';
+    const getCollegeByNameUrl = 'http://localhost/chatbot/services/searchcollege.php';
 
     useEffect(() => {
         axios
