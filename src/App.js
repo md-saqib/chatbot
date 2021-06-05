@@ -6,7 +6,6 @@ import SearchCollegeByName from './components/searchCollegeByName';
 // all available props
 const theme = {
     background: '#f5f8fb',
-    fontFamily: 'Helvetica Neue,Helvetica,Arial,sans-serif',
     headerBgColor: '#202121',
     headerFontColor: '#fff',
     headerFontSize: '14px',
@@ -16,6 +15,10 @@ const theme = {
     userFontColor: '#4a4a4a',
 };
 
+function GoToPage(){
+    window.location.href = 'http://www.google.com';
+}
+
 const ExampleDBPedia = () => (
     <ThemeProvider theme={theme}>
     <ChatBot
@@ -24,20 +27,41 @@ const ExampleDBPedia = () => (
         recognitionEnable={true}
         steps={[
             {
-                id: '1',
-                message: 'Type something to search on VTU',
-                trigger: 'search',
+                id: 'welcomeMessage',
+                message: 'Hello! Welcome to Visvesvaraya Technological University. How may I help you?',
+                trigger: 'indexMessage',
             },
             {
-                id: 'search',
-                user: true,
-                trigger: '3',
+                id: 'indexMessage',
+                message: 'Kindly choose from one of the following categories to get started.',
+                trigger: 'indexOptions',
+            },
+            {
+                id: 'indexOptions',
+                options: [
+                    { value: 1, label: 'About VTU', trigger: 'aboutVTU' },
+                    { value: 2, label: 'Vision, Mission and Mandate', trigger: 'visionMissionMandate' },
+                    { value: 3, label: 'Number 3', trigger: '3' },
+                ],
+            },
+            {
+                id: 'aboutVTU',
+                message: 'Visvesvaraya Technological University is a collegiate public state university in Belagavi, ' +
+                    'Karnataka established by the Government of Karnataka. Apart from a few notable exceptions, ' +
+                    'VTU has authority over engineering education throughout the state of Karnataka.',
+                trigger: 'aboutLoadMore',
+            },
+            {
+                id: 'aboutLoadMore',
+                component: <GoToPage />,
+            },
+            {
+                id: 'visionMissionMandate',
+                message: 'haha',
             },
             {
                 id: '3',
-                component: <SearchCollegeByName />,
-                waitAction: true,
-                trigger: '1',
+                message: 'oops',
             },
         ]}
     />
