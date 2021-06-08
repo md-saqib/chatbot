@@ -1,3 +1,28 @@
+<?php
+session_start();
+error_reporting(E_ERROR | E_PARSE);
+include( dirname(__FILE__) . DIRECTORY_SEPARATOR . 'classes' . DIRECTORY_SEPARATOR . 'college_management.php');
+include( dirname(__FILE__) . DIRECTORY_SEPARATOR . 'config.php');
+if(strlen($_SESSION['login'])==0)
+  {
+header('location:login.php');
+}
+else{
+
+if(isset($_GET['del']))
+{
+$id=$_GET['del'];
+$sql = "select * from college_details WHERE id=:id; delete from college_details WHERE id=:id";
+$query = $dbh->prepare($sql);
+$query -> bindParam(':id',$id, PDO::PARAM_STR);
+$query -> execute();
+$results=$query->fetchAll(PDO::FETCH_OBJ);
+$cnt=1;
+
+$_SESSION['delmsg']="College deleted";
+header('location:college-list.php?deleted=1');
+
+}?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,7 +65,7 @@
             <!-- Salute + Small stats -->
             <div class="row align-items-center mb-4">
               <div class="col-md-5 mb-4 mb-md-0">
-                <span class="h2 mb-0 text-white d-block">Morning, Heather</span>
+                <span class="h2 mb-0 text-white d-block">Morning, <?php echo $_SESSION['display_name'];?></span>
                 
               </div>
             </div>
@@ -120,19 +145,28 @@
               </tr>
             </thead>
             <tbody class="list">
+              <?php $sql = "SELECT * from  college_details";
+                $query = $dbh-> prepare($sql);
+                $query->execute();
+                $results=$query->fetchAll(PDO::FETCH_OBJ);
+                $cnt=1;
+                if($query->rowCount() > 0)
+                  {
+                    foreach($results as $result)
+                      {               ?>
               <tr>
                 <th scope="row">
                   <div class="media align-items-center">
                     <div class="media-body">
-                      <span class="name mb-0 text-sm">HKBK College of Engineering</span>
+                      <span class="name mb-0 text-sm"><?php echo htmlentities($result->collegeName);?></span>
                     </div>
                   </div>
                 </th>
                 <td>
-                  HKBK
+                  <?php echo htmlentities($result->collegeCode);?>
                 </td>
                 <td>
-                  Bangalore
+                  <?php echo htmlentities($result->collegeDistrict);?>
                 </td>
                 <td class="text-right">
                   <!-- Actions -->
@@ -140,46 +174,18 @@
                     <a href="#" class="action-item mr-2" data-toggle="tooltip" title="" data-original-title="Quick view">
                       <i class="fas fa-external-link-alt"></i>
                     </a>
-                    <a href="#" class="action-item mr-2" data-toggle="tooltip" title="" data-original-title="Edit">
+                    <a href="edit-college.php?cid=<?php echo htmlentities($result->id);?>" class="action-item mr-2" data-toggle="tooltip" title="" data-original-title="Edit">
                       <i class="fas fa-pencil-alt"></i>
                     </a>
-                    <a href="#" class="action-item text-danger mr-2" data-toggle="tooltip" title="" data-original-title="Move to trash">
+                    <a href="college-list.php?del=<?php echo htmlentities($result->id);?>" onclick="return confirm('Are you sure you want to delete?');" class="action-item text-danger mr-2" data-toggle="tooltip" title="" data-original-title="Move to trash">
                       <i class="fas fa-trash"></i>
                     </a>
                   </div>
                 </td>
               </tr>
               <tr class="table-divider"></tr>
-              <tr>
-                <th scope="row">
-                  <div class="media align-items-center">
-                    <div class="media-body">
-                      <span class="name mb-0 text-sm">Atria</span>
-                    </div>
-                  </div>
-                </th>
-                <td>
-                  AT
-                </td>
-                <td>
-                  Gulbarga
-                </td>
-                <td class="text-right">
-                  <!-- Actions -->
-                  <div class="actions ml-3">
-                    <a href="#" class="action-item mr-2" data-toggle="tooltip" title="" data-original-title="Quick view">
-                      <i class="fas fa-external-link-alt"></i>
-                    </a>
-                    <a href="#" class="action-item mr-2" data-toggle="tooltip" title="" data-original-title="Edit">
-                      <i class="fas fa-pencil-alt"></i>
-                    </a>
-                    <a href="#" class="action-item text-danger mr-2" data-toggle="tooltip" title="" data-original-title="Move to trash">
-                      <i class="fas fa-trash"></i>
-                    </a>
-                  </div>
-                </td>
-              </tr>
-              
+
+              <?php $cnt=$cnt+1;}} ?>
             </tbody>
           </table>
         </div>
@@ -236,3 +242,5 @@
 </body>
 
 </html>
+
+<?php } ?>

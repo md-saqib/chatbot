@@ -1,12 +1,47 @@
 <?php
 session_start();
-// error_reporting(0);
+error_reporting(0);
 include( dirname(__FILE__) . DIRECTORY_SEPARATOR . 'config.php');
 if(strlen($_SESSION['login'])==0)
-  {
-header('location:login.php');
+    {   
+header('location:index.php');
 }
-else{?>
+else{ 
+  if(isset($_POST['update']))
+{
+      $cid=intval($_GET['cid']);
+      $collegeName=$_POST['collegeName'];
+      $collegeCode=$_POST['collegeCode'];
+      $collegeSuburb=$_POST['collegeSuburb'];
+      $collegeEmail=$_POST['collegeEmail'];
+      $collegeSTD=$_POST['collegeSTD'];
+      $collegePhone=$_POST['collegePhone'];
+      $collegeWebsite=$_POST['collegeWebsite'];
+      $collegeAddress=$_POST['collegeAddress'];
+      $collegeCity=$_POST['collegeCity'];
+      $collegeDistrict=$_POST['collegeDistrict'];
+
+
+$sql="update college_details set collegeName=:collegeName, collegeCode=:collegeCode, collegeSuburb=:collegeSuburb, collegeEmail=:collegeEmail,  collegeSTD=:collegeSTD, collegePhone=:collegePhone, collegeWebsite=:collegeWebsite, collegeAddress=:collegeAddress, collegeCity=:collegeCity, collegeDistrict=:collegeDistrict where id=:cid";
+
+$query = $dbh->prepare($sql);
+$query->bindParam(':collegeName',$consultant_name,PDO::PARAM_STR);
+$query->bindParam(':collegeCode',$role,PDO::PARAM_STR);
+$query->bindParam(':collegeSuburb',$technology,PDO::PARAM_STR);
+$query->bindParam(':collegeEmail',$years_of_experience,PDO::PARAM_STR);
+$query->bindParam(':collegeSTD',$education,PDO::PARAM_STR);
+$query->bindParam(':collegePhone',$notice_period,PDO::PARAM_STR);
+$query->bindParam(':collegeWebsite',$language,PDO::PARAM_STR);
+$query->bindParam(':collegeAddress',$min_rate,PDO::PARAM_STR);
+$query->bindParam(':collegeCity',$current_location,PDO::PARAM_STR);
+$query->bindParam(':collegeDistrict',$comments,PDO::PARAM_STR);
+$query->bindParam(':cid',$cid,PDO::PARAM_STR);
+$query->execute();
+$_SESSION['updatemsg']="Candidate info updated successfully";
+header('location:college-list.php');
+
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -99,12 +134,24 @@ else{?>
           <div class="actions-toolbar py-2 mb-4">
             <h2 class="mb-1">Collge information</h2>
           </div>
-          <form action="add_college.php" method="POST" enctype="multipart/form-data">
+          <form method="POST" enctype="multipart/form-data">
+            <?php 
+              $cid=intval($_GET['cid']);
+              $sql = "SELECT * from  college_details where id=:cid";
+              $query = $dbh -> prepare($sql);
+              $query->bindParam(':cid',$cid,PDO::PARAM_STR);
+              $query->execute();
+              $results=$query->fetchAll(PDO::FETCH_OBJ);
+              $cnt=1;
+              if($query->rowCount() > 0)
+              {
+              foreach($results as $result)
+              {               ?>
             <div class="row">
               <div class="col">
                 <div class="form-group">
                   <label class="form-control-label">College Name</label>
-                  <input class="form-control" type="text" name="collegeName" placeholder="Enter College Name">
+                  <input class="form-control" type="text" name="collegeName" placeholder="Enter College Name" value="<?php echo htmlentities($result->collegeName);?>">
                 </div>
               </div>
             </div>
@@ -112,14 +159,19 @@ else{?>
               <div class="col-md-6">
                 <div class="form-group">
                   <label class="form-control-label">College Code</label>
-                  <input class="form-control" type="text" name="collegeCode" placeholder="Enter College Code">
+                  <input class="form-control" type="text" name="collegeCode" placeholder="Enter College Code" value="<?php echo htmlentities($result->collegeCode);?>">
                 </div>
               </div>
               <div class="col-md-6">
                   <div class="form-group focused">
                     <label class="form-control-label">Suburb</label>
                     <select class="form-control select2-hidden-accessible" name="collegeSuburb" data-toggle="select" title="Country" data-live-search="true" data-live-search-placeholder="Country" data-select2-id="4" tabindex="-1" aria-hidden="true">
-                      <option data-select2-id="6">- Select-</option>
+                      <option selected><?php if($result->collegeSuburb==='urban') {?>
+                        Urban
+                        <?php } 
+                                else {?>
+                        Rural
+                        <?php } ?></option>
                       <option value="urban">Urban</option>
                       <option value="rural">Rural</option>
                     </select>
@@ -130,7 +182,7 @@ else{?>
               <div class="col-md-6">
                 <div class="form-group">
                   <label class="form-control-label">College Official Email</label>
-                  <input class="form-control" type="email" name="collegeEmail" placeholder="name@exmaple.com">
+                  <input class="form-control" type="email" name="collegeEmail" placeholder="name@exmaple.com" value="<?php echo htmlentities($result->collegeEmail);?>">
                   <small class="form-text text-muted mt-2">This is the main email address that we'll send notifications to. </small>
                 </div>
               </div>
@@ -139,13 +191,13 @@ else{?>
               <div class="col-md-6">
                 <div class="form-group">
                   <label class="form-control-label">College STD Code</label>
-                  <input class="form-control" type="text" name="collegeSTD" placeholder="080">
+                  <input class="form-control" type="text" name="collegeSTD" placeholder="080" value="<?php echo htmlentities($result->collegeSTD);?>">
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
                   <label class="form-control-label">College Phone</label>
-                  <input class="form-control" type="text" name="collegePhone" placeholder="+40-777 245 549">
+                  <input class="form-control" type="text" name="collegePhone" placeholder="+40-777 245 549" value="<?php echo htmlentities($result->collegePhone);?>">
                 </div>
               </div>
             </div>
@@ -153,7 +205,7 @@ else{?>
               <div class="col">
                 <div class="form-group">
                   <label class="form-control-label">College Website</label>
-                  <input class="form-control" type="text" name="collegeWebsite" placeholder="Enter College Website">
+                  <input class="form-control" type="text" name="collegeWebsite" placeholder="Enter College Website" value="<?php echo htmlentities($result->collegeWebsite);?>">
                 </div>
               </div>
             </div>
@@ -167,7 +219,7 @@ else{?>
                 <div class="col">
                   <div class="form-group">
                     <label class="form-control-label">Address</label>
-                    <input class="form-control" type="text" name="collegeAddress" placeholder="Enter the College address">
+                    <input class="form-control" type="text" name="collegeAddress" placeholder="Enter the College address" value="<?php echo htmlentities($result->collegeAddress);?>">
                   </div>
                 </div>
               </div>
@@ -175,14 +227,22 @@ else{?>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="form-control-label">City</label>
-                    <input class="form-control" type="text" name="collegeCity" placeholder="City">
+                    <input class="form-control" type="text" name="collegeCity" placeholder="City" value="<?php echo htmlentities($result->collegeCity);?>">
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group focused">
                     <label class="form-control-label">District</label>
                     <select class="form-control select2-hidden-accessible" name="collegeDistrict" data-toggle="select" title="Country" data-live-search="true" data-live-search-placeholder="Country" data-select2-id="4" tabindex="-1" aria-hidden="true">
-                      <option data-select2-id="6">- Select-</option>
+                      <option selected><?php if($result->collegeDistrict==='Bengaluru') {?>
+                        Bengaluru
+                        <?php } elseif ($result->collegeDistrict==='Belgavi') {?>
+                         Belgavi
+                        <?php } elseif ($result->collegeDistrict==='Kalaburgi') {?>
+                        Kalaburgi
+                        <?php } else {?>
+                        Mysuru
+                        <?php } ?></option>
                       <option value="Bengaluru">Bengaluru</option>
                       <option value="Belgavi">Belgavi</option>
                       <option value="Kalaburgi">Kalaburgi</option>
@@ -191,10 +251,11 @@ else{?>
                   </div>
                 </div>
               </div>
-            </div>
+              <?php }} ?>
+            </div>            
             <!-- Save changes buttons -->
             <div class="pt-5 mt-5 delimiter-top text-center">
-              <button type="submit" class="btn btn-sm btn-primary">Save changes</button>
+              <button type="submit" name="update" value="Update" class="btn btn-sm btn-primary">Save changes</button>
               <button onclick="location.href='#';" class="btn btn-link text-muted">Cancel</button>
             </div>
           </form>

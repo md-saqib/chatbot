@@ -1,3 +1,38 @@
+<?php
+session_start();
+error_reporting(0);
+include( dirname(__FILE__) . DIRECTORY_SEPARATOR . 'config.php');
+if($_SESSION['login']!=''){
+$_SESSION['login']='';
+}
+if(isset($_POST['login']))
+{
+$un=$_POST['un'];
+$ps=md5($_POST['ps']);
+$sql ="SELECT * FROM admin WHERE username=:un and password=:ps";
+$query= $dbh -> prepare($sql);
+$query-> bindParam(':un', $un, PDO::PARAM_STR);
+$query-> bindParam(':ps', $ps, PDO::PARAM_STR);
+$query-> execute();
+$results=$query->fetchAll(PDO::FETCH_OBJ);
+
+if($query->rowCount() > 0)
+{
+ foreach ($results as $result) {
+ $_SESSION['stdid']=$result->id;
+ $_SESSION['login']=$_POST['un'];
+ $_SESSION['email']=$result->email;
+ $_SESSION['name']=$result->name;
+ $_SESSION['display_name']=$result->display_name;
+ $_SESSION['role']=$result->role;
+echo "<script type='text/javascript'> document.location ='index.php'; </script>";
+}
+}
+else{
+echo "<script>alert('Invalid Details');</script>";
+}
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,14 +61,14 @@
                 <p class="text-muted mb-0">Sign in to your account to continue.</p>
               </div>
               <span class="clearfix"></span>
-              <form role="form">
+              <form method="POST" role="form">
                 <div class="form-group">
                   <label class="form-control-label">Email address</label>
                   <div class="input-group input-group-merge">
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fas fa-user"></i></span>
                     </div>
-                    <input type="email" class="form-control" id="input-email" placeholder="name@example.com">
+                    <input type="text" class="form-control" name="un" placeholder="name@example.com">
                   </div>
                 </div>
                 <div class="form-group mb-4">
@@ -46,7 +81,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fas fa-key"></i></span>
                     </div>
-                    <input type="password" class="form-control" id="input-password" placeholder="Password">
+                    <input type="password" class="form-control" name="ps" placeholder="Password">
                     <div class="input-group-append">
                       <span class="input-group-text">
                         <i class="fas fa-eye"></i>
@@ -55,7 +90,7 @@
                   </div>
                 </div>
                 <div class="mt-4">
-                  <button type="button" class="btn btn-block btn-primary">Sign in</button></div>
+                  <button type="submit" name="login" class="btn btn-block btn-primary">Sign in</button></div>
               </form>
           </div>
         </div>
