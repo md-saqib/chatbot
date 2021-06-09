@@ -65,7 +65,7 @@ header('location:college-list.php?deleted=1');
             <!-- Salute + Small stats -->
             <div class="row align-items-center mb-4">
               <div class="col-md-5 mb-4 mb-md-0">
-                <span class="h2 mb-0 text-white d-block">Morning, <?php echo $_SESSION['display_name'];?></span>
+                <span class="h2 mb-0 text-white d-block">Hello, <?php echo $_SESSION['display_name'];?></span>
                 
               </div>
             </div>
@@ -171,7 +171,7 @@ header('location:college-list.php?deleted=1');
                 <td class="text-right">
                   <!-- Actions -->
                   <div class="actions ml-3">
-                    <a href="#" class="action-item mr-2" data-toggle="tooltip" title="" data-original-title="Quick view">
+                    <a href="view-college.php?cid=<?php echo htmlentities($result->id);?>" class="action-item mr-2" data-toggle="tooltip" title="" data-original-title="Quick view">
                       <i class="fas fa-external-link-alt"></i>
                     </a>
                     <a href="edit-college.php?cid=<?php echo htmlentities($result->id);?>" class="action-item mr-2" data-toggle="tooltip" title="" data-original-title="Edit">

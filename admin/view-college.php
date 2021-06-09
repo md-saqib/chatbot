@@ -1,3 +1,12 @@
+<?php
+session_start();
+error_reporting(0);
+include( dirname(__FILE__) . DIRECTORY_SEPARATOR . 'config.php');
+if(strlen($_SESSION['login'])==0)
+  {
+header('location:login.php');
+}
+else{?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -83,67 +92,123 @@
         </div>
       </div>
     </section>
-    <section class="slice bg-section-secondary">
+    
+    <section class="slice slice-lg">
       <div class="container">
-        <div class="col-lg-9 m-auto">
-          <!-- General information form -->
-          <div class="actions-toolbar py-2 mb-4">
-            <h2 class="mb-1">My Profile</h2>
+        <?php
+          $cid=intval($_GET['cid']);
+          $sql="SELECT * from college_details where id=:cid";
+          $query=$dbh->prepare($sql);
+          $query-> bindParam(':cid',$cid, PDO::PARAM_STR);
+          $query->execute();
+          $results=$query->fetchAll(PDO::FETCH_OBJ);
+          $cnt=1;
+          if($query->rowCount() > 0)
+          {
+          foreach($results as $result)
+          {
+            ?>
+        <div class="row row-grid">
+          <div class="col-lg-4">
+            <h4>College Name:</h4>
           </div>
-          <form>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label class="form-control-label">First Name</label>
-                  <input type="text" class="form-control flatpickr-input" data-toggle="date" placeholder="First Name">
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label class="form-control-label">Last Name</label>
-                  <input type="text" class="form-control flatpickr-input" data-toggle="date" placeholder="Last Name">
-                </div>
-              </div>
-            </div>
-            <div class="row align-items-center">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label class="form-control-label">Role</label>
-                  <input type="text" class="form-control flatpickr-input" data-toggle="date" placeholder="Enter College Code" value="Administrator" readonly>
-                </div>
-              </div>
-              <div class="col-md-6">
-                  <div class="form-group focused">
-                    <label class="form-control-label">Gender</label>
-                    <select class="form-control select2-hidden-accessible" data-toggle="select" title="Country" data-live-search="true" data-live-search-placeholder="Country" data-select2-id="4" tabindex="-1" aria-hidden="true">
-                      <option data-select2-id="6">- Select-</option>
-                      <option>Male</option>
-                      <option>Female</option>
-                    </select>
-                  </div>
-                </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label class="form-control-label">Registered Email</label>
-                  <input class="form-control" type="email" placeholder="name@exmaple.com">
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label class="form-control-label">Registered Phone</label>
-                  <input class="form-control" type="text" placeholder="+40-777 245 549">
-                </div>
-              </div>
-            </div>
-            <!-- Save changes buttons -->
-            <div class="pt-5 mt-5 delimiter-top text-center">
-              <button type="button" class="btn btn-sm btn-primary">Save changes</button>
-              <button type="button" class="btn btn-link text-muted">Cancel</button>
-            </div>
-          </form>
-        </div>       
+          <div class="col-lg-8">
+            <h4 class="lead lh-180">
+              <?php echo htmlentities($result->collegeName);?>
+            </h4>
+          </div>
+        </div>
+        <div class="row row-grid">
+          <div class="col-lg-4">
+            <h4>College Code:</h4>
+          </div>
+          <div class="col-lg-8">
+            <h4 class="lead lh-180">
+              <?php echo htmlentities($result->collegeCode);?>
+            </h4>
+          </div>
+        </div>
+        <div class="row row-grid">
+          <div class="col-lg-4">
+            <h4>College Suburb:</h4>
+          </div>
+          <div class="col-lg-8">
+            <h4 class="lead lh-180">
+              <?php echo htmlentities($result->collegeSuburb);?>
+            </h4>
+          </div>
+        </div>
+        <div class="row row-grid">
+          <div class="col-lg-4">
+            <h4>College Official Email:</h4>
+          </div>
+          <div class="col-lg-8">
+            <h4 class="lead lh-180">
+              <?php echo htmlentities($result->collegeEmail);?>
+            </h4>
+          </div>
+        </div>
+        <div class="row row-grid">
+          <div class="col-lg-4">
+            <h4>College STD Code:</h4>
+          </div>
+          <div class="col-lg-8">
+            <h4 class="lead lh-180">
+              <?php echo htmlentities($result->collegeSTD);?>
+            </h4>
+          </div>
+        </div>
+        <div class="row row-grid">
+          <div class="col-lg-4">
+            <h4>College Phone:</h4>
+          </div>
+          <div class="col-lg-8">
+            <h4 class="lead lh-180">
+              <?php echo htmlentities($result->collegePhone);?>
+            </h4>
+          </div>
+        </div>
+        <div class="row row-grid">
+          <div class="col-lg-4">
+            <h4>College Website:</h4>
+          </div>
+          <div class="col-lg-8">
+            <h4 class="lead lh-180">
+              <a href="<?php echo htmlentities($result->collegeWebsite);?>"><?php echo htmlentities($result->collegeWebsite);?></a>
+            </h4>
+          </div>
+        </div>
+        <div class="row row-grid">
+          <div class="col-lg-4">
+            <h4>College Address:</h4>
+          </div>
+          <div class="col-lg-8">
+            <h4 class="lead lh-180">
+              <?php echo htmlentities($result->collegeAddress);?>
+            </h4>
+          </div>
+        </div>
+        <div class="row row-grid">
+          <div class="col-lg-4">
+            <h4>College City:</h4>
+          </div>
+          <div class="col-lg-8">
+            <h4 class="lead lh-180">
+              <?php echo htmlentities($result->collegeCity);?>
+            </h4>
+          </div>
+        </div>
+        <div class="row row-grid">
+          <div class="col-lg-4">
+            <h4>College District:</h4>
+          </div>
+          <div class="col-lg-8">
+            <h4 class="lead lh-180">
+              <?php echo htmlentities($result->collegeDistrict);?>
+            </h4>
+          </div>
+        </div>
+        <?php }} ?>
       </div>
     </section>
   </div>
@@ -165,7 +230,10 @@
   <!-- Purpose JS -->
   <script src="assets/js/purpose.js"></script>
   <!-- Demo JS - remove it when starting your project -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="assets/js/demo.js"></script>
 </body>
 
 </html>
+
+<?php } ?>

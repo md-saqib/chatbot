@@ -40,7 +40,7 @@
             <!-- Salute + Small stats -->
             <div class="row align-items-center mb-4">
               <div class="col-md-5 mb-4 mb-md-0">
-                <span class="h2 mb-0 text-white d-block">Morning, <?php echo $_SESSION['display_name'];?></span>
+                <span class="h2 mb-0 text-white d-block">Hello, <?php echo $_SESSION['display_name'];?></span>
                 
               </div>
             </div>

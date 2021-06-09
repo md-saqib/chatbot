@@ -25,16 +25,16 @@ else{
 $sql="update college_details set collegeName=:collegeName, collegeCode=:collegeCode, collegeSuburb=:collegeSuburb, collegeEmail=:collegeEmail,  collegeSTD=:collegeSTD, collegePhone=:collegePhone, collegeWebsite=:collegeWebsite, collegeAddress=:collegeAddress, collegeCity=:collegeCity, collegeDistrict=:collegeDistrict where id=:cid";
 
 $query = $dbh->prepare($sql);
-$query->bindParam(':collegeName',$consultant_name,PDO::PARAM_STR);
-$query->bindParam(':collegeCode',$role,PDO::PARAM_STR);
-$query->bindParam(':collegeSuburb',$technology,PDO::PARAM_STR);
-$query->bindParam(':collegeEmail',$years_of_experience,PDO::PARAM_STR);
-$query->bindParam(':collegeSTD',$education,PDO::PARAM_STR);
-$query->bindParam(':collegePhone',$notice_period,PDO::PARAM_STR);
-$query->bindParam(':collegeWebsite',$language,PDO::PARAM_STR);
-$query->bindParam(':collegeAddress',$min_rate,PDO::PARAM_STR);
-$query->bindParam(':collegeCity',$current_location,PDO::PARAM_STR);
-$query->bindParam(':collegeDistrict',$comments,PDO::PARAM_STR);
+$query->bindParam(':collegeName',$collegeName,PDO::PARAM_STR);
+$query->bindParam(':collegeCode',$collegeCode,PDO::PARAM_STR);
+$query->bindParam(':collegeSuburb',$collegeSuburb,PDO::PARAM_STR);
+$query->bindParam(':collegeEmail',$collegeEmail,PDO::PARAM_STR);
+$query->bindParam(':collegeSTD',$collegeSTD,PDO::PARAM_STR);
+$query->bindParam(':collegePhone',$collegePhone,PDO::PARAM_STR);
+$query->bindParam(':collegeWebsite',$collegeWebsite,PDO::PARAM_STR);
+$query->bindParam(':collegeAddress',$collegeAddress,PDO::PARAM_STR);
+$query->bindParam(':collegeCity',$collegeCity,PDO::PARAM_STR);
+$query->bindParam(':collegeDistrict',$collegeDistrict,PDO::PARAM_STR);
 $query->bindParam(':cid',$cid,PDO::PARAM_STR);
 $query->execute();
 $_SESSION['updatemsg']="Candidate info updated successfully";
@@ -84,7 +84,7 @@ header('location:college-list.php');
             <!-- Salute + Small stats -->
             <div class="row align-items-center mb-4">
               <div class="col-md-5 mb-4 mb-md-0">
-                <span class="h2 mb-0 text-white d-block">Morning, <?php echo $_SESSION['display_name'];?></span>
+                <span class="h2 mb-0 text-white d-block">Hello, <?php echo $_SESSION['display_name'];?></span>
                 
               </div>
             </div>
