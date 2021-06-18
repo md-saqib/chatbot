@@ -29,3 +29,27 @@ code {
 
 
 /*Custom CSS*/
+
+.vcImage {
+  width: 100%;
+}
+
+.vcTitle {
+  font-weight: 200;
+}
+
+.loadMoreButton {
+  text-align: center;
+}
+
+.loadMoreButton a{
+  background: #202121;
+  border: 0;
+  border-radius: 5px;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 15%);
+  color: #fff;
+  display: inline-block;
+  font-size: 14px;
+  padding: 12px 40px;
+  text-decoration: none;
+}
