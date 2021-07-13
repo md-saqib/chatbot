@@ -7,7 +7,8 @@ function SearchCollegeByName(props) {
     const [loading, setLoading] = useState(true);
     const [results, setResults] = useState({});
     const [trigger, setTrigger] = useState(false);
-    const [collegeName, setCollegeName] = useState(props.steps.search.value);
+    console.log(props)
+    const [collegeName, setCollegeName] = useState(props.steps.searchVTUCollege.value);
     const getCollegeByNameUrl = 'http://localhost/chatbot/services/searchcollege.php';
 
     useEffect(() => {
@@ -22,7 +23,7 @@ function SearchCollegeByName(props) {
                         setResults(collegeDetails);
                         setLoading(false);
                     } else {
-                        setResults('No data found');
+                        setResults([]);
                         setLoading(false);
                     }
                 }
@@ -53,6 +54,9 @@ function SearchCollegeByName(props) {
                     )
                 }
             )}
+            {
+                results.length === 0 && <div>College not found!</div>
+            }
             {
                 !loading &&
                 <div

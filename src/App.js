@@ -17,7 +17,11 @@ const theme = {
     userFontColor: '#4a4a4a',
 };
 
-
+function GoToPage(props){
+  const pageVTU =  'https://vtu.ac.in/en/?s=' + props.steps.searchVTU.value;
+  console.log('props', props);
+  return <div class="loadMoreButton"><a href={pageVTU} rel="noreferrer" target="_blank">Click here to redirect</a></div> 
+  }
 
 const ExampleDBPedia = () => (
     <ThemeProvider theme={theme}>
@@ -42,9 +46,8 @@ const ExampleDBPedia = () => (
                     { value: 1, label: 'About VTU', trigger: 'aboutVTU' },
                     { value: 2, label: 'Academic', trigger: 'academic' },
                     { value: 3, label: 'Examination', trigger: 'examination' },
-                    // { value: 4, label: 'Campuses', trigger: 'campuses' },
-                    // { value: 5, label: 'Contact', trigger: 'contact' },
-                    // { value: 6, label: 'Request a Call Back', trigger: 'callBack' },
+                    { value: 4, label: 'Campuses', trigger: 'campuses' },
+                    { value: 5, label: 'Contact', trigger: 'contact' },
                 ],
             },
             {
@@ -108,7 +111,7 @@ const ExampleDBPedia = () => (
               },
               {
                 id: 'research',
-                component: (<p>redirect to research page</p>),
+                component: (<div class="loadMoreButton"><p>Redirecting to Research page</p><a href="http://research.vtu.ac.in/" rel="noreferrer" target="_blank">Click here</a></div>),
                 trigger: 'finish-question',
               },
               {
@@ -125,7 +128,7 @@ const ExampleDBPedia = () => (
               },
               {
                 id: 'administration',
-                component: (<p>redirect to administration page</p>),
+                component: (<div class="loadMoreButton"><p>Redirecting to Administration page</p><a href="https://vtu.ac.in/en/administration/" rel="noreferrer" target="_blank">Click here</a></div>),
                 trigger: 'finish-question',
               },
 
@@ -139,7 +142,7 @@ const ExampleDBPedia = () => (
               },
               {
                 id: 'circAndNotif',
-                component: (<p>redirect to Circulars and Notifications page</p>),
+                component: (<div class="loadMoreButton"><p>Redirecting to Circulars &amp; Notifications page</p><a href="https://vtu.ac.in/en/category/administration-circulars/" rel="noreferrer" target="_blank">Click here</a></div>),
                 trigger: 'finish-question',
               },
 
@@ -152,17 +155,17 @@ const ExampleDBPedia = () => (
               },
               {
                 id: 'ugFee',
-                component: (<p>redirect to ugFee page</p>),
+                component: (<div class="loadMoreButton"><p>Redirecting to UG Fee page</p><a href="https://vtu.ac.in/en/ug-registration-other-fee/" rel="noreferrer" target="_blank">Click here</a></div>),
                 trigger: 'finish-question',
               },
               {
                 id: 'pgFee',
-                component: (<p>redirect to pgFee page</p>),
+                component: (<div class="loadMoreButton"><p>Redirecting to PG Fee page</p><a href="https://vtu.ac.in/en/pg-registration-other-fee/" rel="noreferrer" target="_blank">Click here</a></div>),
                 trigger: 'finish-question',
               },
               {
                 id: 'academicCalendar',
-                component: (<p>redirect to Academic Calendar page</p>),
+                component: (<div class="loadMoreButton"><p>Redirecting to Academic Calender page</p><a href="https://vtu.ac.in/en/academic-calendar/" rel="noreferrer" target="_blank">Click here</a></div>),
                 trigger: 'finish-question',
               },
 
@@ -178,38 +181,94 @@ const ExampleDBPedia = () => (
               },
               {
                 id: 'examinationGuidelines',
-                component: (<p>redirect to Examination Guidlines page</p>),
+                component: (<div class="loadMoreButton"><p>Redirecting to Examination Guidlines page</p><a href="https://vtu.ac.in/en/examination-guidelines/" rel="noreferrer" target="_blank">Click here</a></div>),
                 trigger: 'finish-question',
               },
               {
                 id: 'examApplication',
-                component: (<p>redirect to Exam Application page</p>),
+                component: (<div class="loadMoreButton"><p>Redirecting to Exam Application page</p><a href="https://prexam.vtu.ac.in/" rel="noreferrer" target="_blank">Click here</a></div>),
                 trigger: 'finish-question',
               },
               {
                 id: 'result',
-                component: (<p>redirect to Result page</p>),
+                component: (<div class="loadMoreButton"><p>Redirecting to Results page</p><a href="https://results.vtu.ac.in/" rel="noreferrer" target="_blank">Click here</a></div>),
                 trigger: 'finish-question',
               },
               {
                 id: 'timeTable',
-                component: (<p>redirect to Time Table page</p>),
+                component: (<div class="loadMoreButton"><p>Redirecting to TimeTable page</p><a href="https://vtu.ac.in/en/category/time-table/" rel="noreferrer" target="_blank">Click here</a></div>),
                 trigger: 'finish-question',
               },
-              
+              {
+                id: 'examCircNotif',
+                component: (<div class="loadMoreButton"><p>Redirecting to Exam Circulars &amp; Notifications page</p><a href="https://vtu.ac.in/en/category/exam-circulars-notifications/" rel="noreferrer" target="_blank">Click here</a></div>),
+                trigger: 'finish-question',
+              },
+
+
+
+              {
+                id: 'campuses',
+                message: 'Search VTU affiliated Colleges',
+                trigger: 'searchVTUColleges',
+              },
+              {
+                id: 'searchVTUColleges',
+                user: true,
+                trigger: 'searchVTUCollegeResultInput',
+              },
+              {
+                id: 'searchVTUCollegeResultInput',
+                message: 'Please Wait while we parsing your search query',
+                delay: 100,
+                trigger: 'searchVTUCollegeResult',
+              },
+              {
+                id: 'searchVTUCollegeResult',
+                component: <SearchCollegeByName />,
+                trigger: 'finish-question',
+              },
+
+
+              {
+                id: 'contact',
+                component: (<div class="loadMoreButton"><p>Redirecting to Contact page</p><a href="https://vtu.ac.in/wp-content/uploads/2019/12/Details-of-the-Officers-of-VTU.pdf" rel="noreferrer" target="_blank">Click here</a></div>),
+                trigger: 'finish-question',
+              },
 
 
                 {
                   id: 'finish-question',
-                  message: 'Do you like to see another screen?',
+                  message: 'Still can\'t find your query?',
                   trigger: 'question-result',
                 },
                 {
                   id: 'question-result',
                   options: [
-                    { value: 'yes', label: 'Yes', trigger: 'getStarted' },
-                    { value: 'no', label: 'No, thanks', trigger: 'finish' },
+                    { value: '01', label: 'Search on VTU website', trigger: 'searchVTUText' },
+                    { value: 'yes', label: 'Start Over', trigger: 'getStarted' },
+                    { value: 'no', label: 'End Chat', trigger: 'finish' },
                   ],
+                },
+                {
+                  id: 'searchVTUText',
+                  message: 'Enter your search string',
+                  trigger: 'searchVTU',
+                },
+                {
+                  id: 'searchVTU',
+                  user: true,
+                  trigger: 'searchVTUResult-1',
+                },{
+                  id: 'searchVTUResult-1',
+                  message: 'Please Wait while we parsing your search query',
+                  delay: 100,
+                  trigger: 'searchVTUResult',
+                },
+                {
+                  id: 'searchVTUResult',
+                  component: <GoToPage />,
+                  trigger: 'finish-question',
                 },
                 {
                   id: 'finish',
@@ -224,3 +283,5 @@ const ExampleDBPedia = () => (
 
 
 export default ExampleDBPedia;
+
+

@@ -53,3 +53,7 @@ code {
   padding: 12px 40px;
   text-decoration: none;
 }
+
+.dbpedia button{
+  display: none;
+}
