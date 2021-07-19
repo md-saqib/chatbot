@@ -18,7 +18,9 @@ if(!empty($_GET['college']))
 		response(200,"College Found",$collegeDetails);
 	}
 
-}
+} 
+
+
 else
 {
 	response(400,"Invalid Request",NULL);

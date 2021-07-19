@@ -17,6 +17,8 @@ const theme = {
     userFontColor: '#4a4a4a',
 };
 
+
+
 function GoToPage(props){
   const pageVTU =  'https://vtu.ac.in/en/?s=' + props.steps.searchVTU.value;
   console.log('props', props);

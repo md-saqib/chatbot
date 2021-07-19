@@ -46,10 +46,16 @@ function SearchCollegeByName(props) {
                 (college, index) => {
                     return (
                         <div key={'college_' + index}>
-                            <div>College Name: <a href={college.collegeWebsite} target="_blank">{college.collegeName}</a></div>
-                            <div>Phone number: {college.collegePhone}</div>
-                            <hr />
-                            <br />
+                            <div>College Name: {college.collegeName}</div>
+                            <div>College Code: {college.collegeCode}</div>
+                            <div>College Suburb: {college.collegeSuburb}</div>
+                            <div>College Email: {college.collegeEmail}</div>
+                            <div>College STD: {college.collegeSTD}</div>
+                            <div>College Phone: {college.collegePhone}</div>
+                            <div>College Website: {college.collegeWebsite}</div>
+                            <div>College Address: {college.collegeAddress}</div>
+                            <div>College City: {college.collegeCity}</div>
+                            <div>College District: {college.collegeDistrict}</div>
                         </div>
                     )
                 }
