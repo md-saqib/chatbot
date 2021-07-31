@@ -4,9 +4,9 @@
         // specify your own database credentials
         // localhost
         private $host = "localhost";
-        private $db_name = "u366973878_thoughtbot";
-        private $username = "u366973878_admin";
-        private $password = "D]h5CAL]84U";
+        private $db_name = "u366973878_vtubot";
+        private $username = "u366973878_vtuadmin";
+        private $password = "M&7z9Ts$";
 
         public $conn;
 
