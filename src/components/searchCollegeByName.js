@@ -41,7 +41,7 @@ function SearchCollegeByName(props) {
 
     return (
         <div className="dbpedia">
-            { loading && <Loading /> }
+            {/* { loading && <Loading /> } */}
             {results && results.length > 0 && results.map(
                 (college, index) => {
                     return (
