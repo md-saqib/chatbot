@@ -2,11 +2,17 @@
     class Services{
 
         // specify your own database credentials
-        // localhost
+        // production
+        // private $host = "localhost";
+        // private $db_name = "u366973878_vtubot";
+        // private $username = "u366973878_vtuadmin";
+        // private $password = "M&7z9Ts$";
+
+        //localhost
         private $host = "localhost";
-        private $db_name = "u366973878_vtubot";
-        private $username = "u366973878_vtuadmin";
-        private $password = "M&7z9Ts$";
+        private $db_name = "chatbot";
+        private $username = "root";
+        private $password = "";
 
         public $conn;
 

@@ -9,7 +9,8 @@ function SearchCollegeByName(props) {
     const [trigger, setTrigger] = useState(false);
     console.log(props)
     const [collegeName, setCollegeName] = useState(props.steps.searchVTUColleges.value);
-    const getCollegeByNameUrl = 'http://vtubot.tech/services/searchcollege.php';
+    //const getCollegeByNameUrl = 'http://vtubot.tech/services/searchcollege.php';
+    const getCollegeByNameUrl = 'localhost/services/searchcollege.php';
 
     useEffect(() => {
         axios
@@ -34,14 +35,14 @@ function SearchCollegeByName(props) {
             });
     }, [collegeName]);
 
-    const triggetNext = () => {
+    const triggerNext = () => {
         setTrigger(true);
         props.triggerNextStep();
     };
 
     return (
         <div className="dbpedia">
-            {/* { loading && <Loading /> } */}
+            { loading && <Loading /> }
             {results && results.length > 0 && results.map(
                 (college, index) => {
                     return (
@@ -74,7 +75,7 @@ function SearchCollegeByName(props) {
                     {
                         !trigger &&
                         <button
-                            onClick={() => triggetNext()}
+                            onClick={() => triggerNext()}
                         >
                             Search Again
                         </button>
