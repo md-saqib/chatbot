@@ -35,7 +35,7 @@ const ExampleDBPedia = () => (
         steps={[
             {
                 id: 'welcomeMessage',
-                message: 'Hello! Welcome to Visvesvaraya Technological University. How may I help you?',
+                message: 'Hi! Welcome to Visvesvaraya Technological University. How may I help you?',
                 trigger: 'getStarted',
             },
             {
@@ -285,6 +285,6 @@ const ExampleDBPedia = () => (
 );
 
 
-export default ExampleDBPedia;
+export default ExampleDBPedia; 
 
 
