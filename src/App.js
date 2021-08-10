@@ -31,6 +31,7 @@ const ExampleDBPedia = () => (
         headerTitle="Welcome To VTU ChatBot"
         botAvatar= {BotAvt}
         recognitionEnable={true}
+        // speechSynthesis={{ enable: true, lang: 'en' }}
         steps={[
             {
                 id: 'welcomeMessage',

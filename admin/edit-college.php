@@ -105,12 +105,7 @@ header('location:college-list.php');
                     <a class="dropdown-item" href="college-list.php">College List</a>
                   </div>
                 </div>
-                <div class="btn-group" role="group">
-                  <button id="btn-group-boards" type="button" onclick="location.href='forms.php';" class="btn btn-neutral btn-icon" data-toggle="dropdown" data-offset="0,8" aria-haspopup="true" aria-expanded="false">
-                    <span class="btn-inner--icon"><i class="fas fa-file-alt"></i></span>
-                    <span class="btn-inner--text d-none d-sm-inline-block">Forms</span>
-                  </button>
-                </div>
+               
                 <div class="btn-group" role="group">
                   <button id="btn-group-listing" type="button" class="btn btn-neutral btn-icon rounded-right" data-toggle="dropdown" data-offset="0,8" aria-haspopup="true" aria-expanded="false">
                     <span class="btn-inner--icon"><i class="fas fa-user"></i></span>

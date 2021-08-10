@@ -10,7 +10,7 @@ function SearchCollegeByName(props) {
     console.log(props)
     const [collegeName, setCollegeName] = useState(props.steps.searchVTUColleges.value);
     //const getCollegeByNameUrl = 'http://vtubot.tech/services/searchcollege.php';
-    const getCollegeByNameUrl = 'localhost/services/searchcollege.php';
+    const getCollegeByNameUrl = 'localhost/chatbot/services/searchcollege.php';
 
     useEffect(() => {
         axios
